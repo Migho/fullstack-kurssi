@@ -2,42 +2,47 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 const App = () => {
-    const course = 'Half Stack -sovelluskehitys'
-    const part1 = 'Reactin perusteet'
-    const exercises1 = 10
-    const part2 = 'Tiedonvälitys propseilla'
-    const exercises2 = 7
-    const part3 = 'Komponenttien tila'
-    const exercises3 = 14
-    const dict = {
-        [part1]: exercises1,
-        [part2]: exercises2,
-        [part3]: exercises3
-    };
-  
-    return (
-      <div>
-        <Header course={course} />
-        <Content dict={dict} />
-        <Total dict={dict} />
-      </div>
-    )
+  const course = {
+    name: 'Half Stack -sovelluskehitys',
+    parts: [
+      {
+        name: 'Reactin perusteet',
+        exercises: 10
+      },
+      {
+        name: 'Tiedonvälitys propseilla',
+        exercises: 7
+      },
+      {
+        name: 'Komponenttien tila',
+        exercises: 14
+      }
+    ]
+  }
+
+  return (
+    <div>
+      <Header course={course} />
+      <Content parts={course.parts} />
+      <Total parts={course.parts} />
+    </div>
+  )
 }
 
 const Header = (props) => {
-    return (
-        <h1>{props.course}</h1>
-    )
+  return (
+    <h1>{props.course.name}</h1>
+  )
 }
 
 const Content = (props) => {
-  const {dict} = props
+  const parts = props.parts
+
+  // It just feels bad to hard-code something like this, so i decided to loop anyway
   return (
     <p>
       {
-        Object.entries(dict).map(([key, value]) => (
-          <Part part={key} exercises={value} />
-        ))
+        parts.map((element, i) => <Part key={i} part={element.name} exercises={element.exercises} />)
       }
     </p>
   )
@@ -53,8 +58,8 @@ const Part = (props) => {
 
 const Total = (props) => {
   let result = 0
-  Object.keys(props.dict).map((key) => ( 
-    result += props.dict[key]
+  props.parts.map((element) => ( 
+    result += element.exercises
   ))
   return (
     <p>yhteensä {result} tehtävää</p>
