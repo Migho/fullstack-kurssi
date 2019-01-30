@@ -1,9 +1,13 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 var morgan = require('morgan')
 const cors = require('cors')
 const Person = require('./models/person')
+
 
 app.use(cors())
 app.use(express.static('build'))
@@ -41,13 +45,13 @@ app.get('/api/persons/:id', (req, res, next) => {
 
 app.delete('/api/persons/:id', (req, res, next) => {
   Person.findByIdAndRemove(req.params.id)
-    .then(result => {
+    .then(res => {
       res.status(204).end()
     })
     .catch(error => next(error))
 });
 
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
   const body = req.body
 
   if (body.name === undefined || body.number === undefined) {
@@ -68,7 +72,7 @@ app.post('/api/persons', (req, res) => {
 
   person.save().then(savedPerson => {
     res.json(savedPerson.toJSON())
-  })
+  }).catch(error => next(error))
 })
 
 const unknownEndpoint = (req, res) => {
@@ -78,12 +82,11 @@ const unknownEndpoint = (req, res) => {
 app.use(unknownEndpoint)
 
 const errorHandler = (error, req, response, next) => {
-  console.error(error.message)
-
   if (error.name === 'CastError' && error.kind == 'ObjectId') {
     return response.status(400).send({ error: 'malformatted id' })
-  } 
-
+  } else if (error.name === 'ValidationError') {
+    return response.status(400).json({ error: error.message })
+  }
   next(error)
 }
 

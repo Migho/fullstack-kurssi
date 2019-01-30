@@ -45,7 +45,7 @@ const Rows = (props) => {
       : persons.filter(person => person.name.toUpperCase().includes(newNameFilter.toUpperCase()))
 
   const rows = () => rowsToShow.map(person =>
-    <Person key={person.name} person={person} removePerson={() => props.removePerson(person.id)} />
+    <Person key={person.id} person={person} removePerson={() => props.removePerson(person.id)} />
   )
 
   return (
@@ -101,6 +101,9 @@ const App = () => {
       }).then(() => {
         setSuccessMessage(`Henkilö lisätty onnistuneesti`)
         setTimeout(() => { setSuccessMessage(null) }, 5000)
+      }).catch(error => {
+        setErrorMessage(error.response.data.error)
+        setTimeout(() => { setErrorMessage(null) }, 5000)
       })
     }
   }
