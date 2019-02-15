@@ -2,15 +2,7 @@ const dummy = (blogs) => {
   return 1
 }
 
-const totalLikes = (blogs) => {
-  /*let likes = 0
-  
-  for (var key in blogs) {
-    console.log(key)
-  }
-  for (var i=0; i<blogs.length; i++) {
-    likes += blogs[i].likes
-  }*/
+const totalLikes = (blogs) => {  
   const likes = blogs.reduce((acc, cur) => acc + cur["likes"], 0)
   return likes
 }

@@ -26,6 +26,7 @@
     "express": "^4.16.4",
     "jest": "^24.1.0",
     "mongoose": "^5.4.12",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "supertest": "^3.4.2"
   }
 }
