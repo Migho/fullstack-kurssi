@@ -28,5 +28,10 @@
     "mongoose": "^5.4.12",
     "nodemon": "^1.18.10",
     "supertest": "^3.4.2"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.4",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose-unique-validator": "^2.0.2"
   }
 }

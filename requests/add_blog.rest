@@ -1,7 +1,8 @@
 POST http://localhost:3000/api/blogs
 content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlBsw7Zsw7Zsw7Zsw7YiLCJpZCI6IjVjNmFhYmNmYWVhMWZlMmNmMDgyNDFlNyIsImlhdCI6MTU1MDUxNjkyMH0.8DQ2Vp0brZDkT0VynLEN69331CqUhbQ4h4yA5HCmWtQ
 
 {
-    "title": "haloo",
+    "title": "neljäs Haloo",
     "text": "123123123"
 }
