@@ -1,0 +1,37 @@
+{
+  "name": "fullstack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "watch": "nodemon index.js",
+    "start": "node index.js",
+    "test": "jest --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Migho/fullstack-kurssi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Migho/fullstack-kurssi/issues"
+  },
+  "homepage": "https://github.com/Migho/fullstack-kurssi#readme",
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "jest": "^24.1.0",
+    "mongoose": "^5.4.12",
+    "nodemon": "^1.18.10",
+    "supertest": "^3.4.2"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.4",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose-unique-validator": "^2.0.2"
+  }
+}
