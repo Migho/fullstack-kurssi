@@ -1,7 +1,9 @@
-PUT http://localhost:3000/api/blogs/5c67020e41209e1bc0a1ef18
+PUT http://localhost:3000/api/blogs/5c6af97231b74e2bfc4c5aee
 content-type: application/json
 
 {
-    "title": "haloo",
-    "author": "123123123"
+    "title": "test",
+    "author": "haloo",
+    "url": "saatana",
+    "likes": "2"
 }

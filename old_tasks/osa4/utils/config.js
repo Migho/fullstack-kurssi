@@ -1,4 +1,4 @@
 const PORT = 3003
-const mongoUrl = 'blölölö'
-
+const mongoUrl = 'nönönönö'
+ 
 module.exports = { PORT, mongoUrl }
