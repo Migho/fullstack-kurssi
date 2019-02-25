@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useField } from './hooks'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -21,18 +22,19 @@ const App = () => {
 
   const [notificationMessage, setNotificationMessage] = useState(null)
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  //const [username, setUsername] = useState('')
+  //const [password, setPassword] = useState('')
+  const username = useField('text')
+  const password = useField('password')
   const [user, setUser] = useState(null)
+  const author = useField('text')
+  const url = useField('text')
+  const title = useField('text')
 
   useEffect(() => {
     blogService.getAll().then(blogs => {
       setBlogs(blogs.sort((a, b) => a.likes - b.likes))
-    }
-    )
+    })
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
@@ -44,11 +46,13 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
-      const user = await loginService.login({ username, password })
+      const u = username.f.value
+      const p = password.f.value
+      const user = await loginService.login({ username: u, password: p })
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
       setUser(user)
-      setUsername('')
-      setPassword('')
+      //setUsername('')
+      //setPassword('')
     } catch (exception) {
       setNotificationMessage('Wrong password or username')
       setTimeout(() => { setNotificationMessage(null) }, 5000)
@@ -58,19 +62,20 @@ const App = () => {
   const handleCreateBlog = async (event) => {
     event.preventDefault()
     const blogObject = {
-      title: title,
-      author: author,
-      url: url,
+      title: title.value,
+      author: author.value,
+      url: url.value
     }
+    console.log(blogObject)
     try {
       blogService.create(blogObject).then(returnedBlog => {
         setNotificationMessage(`Adding the blog ${title} was successful`)
         setTimeout(() => { setNotificationMessage(null) }, 5000)
         returnedBlog.id = returnedBlog._id
         setBlogs(blogs.concat(returnedBlog))
-        setTitle('')
-        setAuthor('')
-        setUrl('')
+        title.reset()
+        author.reset()
+        url.reset()
       })
     } catch (exception) {
       setNotificationMessage('Adding the blog failed')
@@ -89,19 +94,14 @@ const App = () => {
         <Togglable buttonLabel='login'>
           <h2>Log in to application</h2>
           <form onSubmit={handleLogin}>
-            <div>
-              Username <input type="text" value={username} name="Username" onChange={({ target }) => setUsername(target.value)}/>
-            </div>
-            <div>
-              Password <input type="password" value={password} name="Password" onChange={({ target }) => setPassword(target.value)}/>
-            </div>
+            Username <input  {...username} reset={''}/> <br/>
+            Password <input  {...password} reset={''}/> <br/>
             <button type="submit">login</button>
           </form>
         </Togglable>
       </div>
     )
   }
-  console.log(blogs)
   return (
     <div>
       <Notification message={notificationMessage} />
@@ -111,15 +111,9 @@ const App = () => {
       </form>
       <h2>create new</h2>
       <form onSubmit={handleCreateBlog}>
-        <div>
-          Title <input type="text" value={title} name="title" onChange={({ target }) => setTitle(target.value)}/>
-        </div>
-        <div>
-          Author <input type="text" value={author} name="author" onChange={({ target }) => setAuthor(target.value)}/>
-        </div>
-        <div>
-          Url <input type="text" value={url} name="url" onChange={({ target }) => setUrl(target.value)}/>
-        </div>
+        Title <input  {...title} reset={''}/> <br/>
+        Author <input  {...author} reset={''}/> <br/>
+        Url <input  {...url} reset={''}/> <br/>
         <button type="submit">create</button>
       </form>
       {blogs.map(blog => <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs} setNotificationMessage={setNotificationMessage} user={user} />
