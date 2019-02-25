@@ -64,10 +64,10 @@ const Blog = ({ blog, blogs, setBlogs, setNotificationMessage, user }) => {
 
   return (
     <div>
-      <div style={hideWhenVisible} onClick={toggleVisibility}>
+      <div style={hideWhenVisible} onClick={toggleVisibility} className="someContent">
         Title: {blog.title}
       </div>
-      <div style={showWhenVisible} onClick={toggleVisibility}>
+      <div style={showWhenVisible} onClick={toggleVisibility} className="fullContent">
         Title: {blog.title},
         Author: {blog.author},
         URL: {blog.url},
